@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="stylee.css">
+</head>
+<body>
+    <h1> Calculator </h1>
+  <div class="container">
+    <div class="calculator">
+      <input type="text" id="display" class="form-control mb-3" readonly>
+      <div class="row">
+        <div class="col">
+          <button class="btn btn-primary btn-block" onclick="appendValue('1')">1</button>
+        </div>
+        <div class="col">
+          <button class="btn btn-primary btn-block" onclick="appendValue('2')">2</button>
+        </div>
+        <div class="col">
+          <button class="btn btn-primary btn-block" onclick="appendValue('3')">3</button>
+        </div>
+        <div class="col">
+          <button class="btn btn-danger btn-block" onclick="operate('+')">+</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <button class="btn btn-primary btn-block" onclick="appendValue('4')">4</button>
+        </div>
+        <div class="col">
+          <button class="btn btn-primary btn-block" onclick="appendValue('5')">5</button>
+        </div>
+        <div class="col">
+          <button class="btn btn-primary btn-block" onclick="appendValue('6')">6</button>
+        </div>
+        <div class="col">
+          <button class="btn btn-danger btn-block" onclick="operate('-')">-</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <button class="btn btn-primary btn-block" onclick="appendValue('7')">7</button>
+        </div>
+        <div class="col">
+          <button class="btn btn-primary btn-block" onclick="appendValue('8')">8</button>
+        </div>
+        <div class="col">
+          <button class="btn btn-primary btn-block" onclick="appendValue('9')">9</button>
+        </div>
+        <div class="col">
+          <button class="btn btn-danger btn-block" onclick="operate('*')">*</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <button class="btn btn-primary btn-block" onclick="appendValue('0')">0</button>
+        </div>
+        <div class="col">
+          <button class="btn btn-primary btn-block" onclick="appendValue('.')">.</button>
+        </div>
+        <div class="col">
+          <button class="btn btn-success btn-block" onclick="calculate()">=</button>
+        </div>
+        <div class="col">
+          <button class="btn btn-danger btn-block" onclick="operate('/')">/</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <button class="btn btn-warning btn-block" onclick="clearDisplay()">C</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let expression = '';
+
+    function appendValue(value) {
+      expression += value;
+      document.getElementById('display').value = expression;
+    }
+
+    function operate(operator) {
+      if (expression !== '') {
+        expression += operator;
+        document.getElementById('display').value = expression;
+      }
+    }
+
+    function calculate() {
+      try {
+        const result = eval(expression);
+        document.getElementById('display').value = result;
+        expression = '';
+      } catch (error) {
+        alert('Invalid expression');
+        clearDisplay();
+      }
+    }
+
+    function clearDisplay() {
+      expression = '';
+      document.getElementById('display').value = '';
+    }
+
+    document.addEventListener('keydown', function(event) {
+      const key = event.key;
+      if (!isNaN(key) || key === '.' || key === '+' || key === '-' || key === '*' || key === '/') {
+        appendValue(key);
+      } else if (key === 'Enter') {
+        calculate();
+      } else {
+        alert('Only numbers are allowed');
+      }
+    });
+  </script>
+</body>
+</html>
