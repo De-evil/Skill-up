@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Country Information</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container">
+    <div class="row" id="card-container"></div>
+  </div>
+  <script>  
+  document.addEventListener('DOMContentLoaded', function () {
+  const cardContainer = document.getElementById('card-container');
+  fetch('https://restcountries.com/v2/all')
+    .then(response => response.json())
+    .then(countries => {
+      countries.forEach(country => {
+        const card = document.createElement('div');
+        card.classList.add('col-lg-4', 'col-sm-12', 'mb-4');
+
+        const cardContent = `
+          <div class="card">
+            <div class="card-header">${country.name}</div>
+            <div class="card-body">
+              <p>Capital: ${country.capital}</p>
+              <p>Latlng: ${country.latlng.join(', ')}</p>
+              <img src="${country.flags[0]}" alt="Flag" class="img-fluid mb-2">
+              <p>Region: ${country.region}</p>
+              <p>Country Code: ${country.alpha2Code}</p>
+              <button class="btn btn-primary" data-country="${country.name}">Click for Weather</button>
+            </div>
+          </div>
+        `;
+        card.innerHTML = cardContent;
+        cardContainer.appendChild(card);
+      });
+
+      // Attach event listeners to buttons for weather data
+      const weatherButtons = document.querySelectorAll('.btn-primary');
+      weatherButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          const countryName = button.getAttribute('data-country');
+          fetchWeatherData(countryName);
+        });
+      });
+    })
+    .catch(error => console.error('Error fetching countries:', error));
+
+  // Function to fetch weather data from OpenWeatherMap API
+  function fetchWeatherData(countryName) {
+    const apiKey = 'YOUR_OPENWEATHERMAP_API_KEY';
+    const apiUrl = `https://openweathermap.org/${countryName}&appid=${apiKey}`;
+
+    fetch(apiUrl)
+      .then(response => response.json())
+      .then(weatherData => {
+        console.log('Weather data:', weatherData);
+        // Process weather data as needed
+      })
+      .catch(error => console.error('Error fetching weather data:', error));
+  }
+});
+
+</script>
+  <!-- <script src="script.js"></script> -->
+</body>
+</html>
