@@ -1,0 +1,49 @@
+html, body {
+  height: 100%;
+  background-color: whitesmoke;
+}
+
+.row {
+  height: 100%;
+  align-items: center;
+}
+
+#pricing {
+  height: 100%;
+  padding: 100px;
+  text-align: center;
+}
+
+.card {
+  text-align: center;
+}
+.card card-title header__category text-muted {
+  text-align: center;
+} 
+
+.card-subtitle{
+  text-align: justify;
+}
+
+.mergeIcon {
+ display: flex;
+ justify-content: auto;
+ 
+}
+
+.card-body {
+  color: white;
+  background-color: rgb(67, 140, 196);
+}
+
+.pricing-column {
+  padding: 3% 2%;
+}
+
+.btn-dark {
+  background-color: rgb(74, 186, 234);
+}
+
+.btn-dark:hover {
+  background-color: #343a40;
+}
